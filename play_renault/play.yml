@@ -1,0 +1,68 @@
+---
+- name: "Check Struts"
+  hosts: all
+  #become: yes
+  remote_user: root
+  gather_facts: no
+  #serial: 
+  #  - 1
+  #  - 5
+  #  - 10
+  
+  vars:
+       script_path: /tmp/check-struts.sh
+       ansible_ssh_pipelining: no
+  tasks:
+      #- name: "Ping hosts"
+      #ping:
+    - name: ensure a list of packages installed
+      yum:
+        state: present
+        name: "{{ packages }}"
+      vars:
+        packages:
+          - lsof
+          - dos2unix
+    - name: Upload script check-struts.sh
+      copy:
+        src: /home/apitcher/Documents/scripts/check_struts/check-struts.sh
+        #src: /scripts/check_struts/check-struts.sh
+        dest: "{{ script_path }}"
+        mode: 00755
+      changed_when: false
+
+    - name: Check if struts presence/version
+      command: "{{ script_path }}"
+      register: command_result
+      changed_when: "'No struts lib found' not in command_result.stdout_lines"
+
+    - debug:
+          msg: "CHECK: {{command_result}} "
+      when: command_result.changed
+   
+    - name: Remove check-struts.sh
+      file:
+        dest: "{{ script_path }}"
+        state: absent
+      changed_when: false
+   
+    - name: List Tomcat
+      yum:
+       list: tomcat
+      register: result
+      changed_when: result.results | length > 0
+      
+    - debug:
+       msg: "{{ result }}"
+      when: result.changed
+
+    - name: Find struts file
+      find:
+        paths: /home/applis/
+        patterns: '*struts*.jar'
+        recurse: yes
+        #exludes: 'home'
+        #files: true
+      register: resultfind
+    - debug:
+       msg: "{{ resultfind }}"
