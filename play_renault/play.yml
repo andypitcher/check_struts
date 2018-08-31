@@ -46,23 +46,25 @@
         state: absent
       changed_when: false
    
-    - name: List Tomcat
-      yum:
-       list: tomcat
-      register: result
-      changed_when: result.results | length > 0
-      
-    - debug:
-       msg: "{{ result }}"
-      when: result.changed
-
-    - name: Find struts file
-      find:
-        paths: /home/applis/
-        patterns: '*struts*.jar'
-        recurse: yes
-        #exludes: 'home'
-        #files: true
-      register: resultfind
-    - debug:
-       msg: "{{ resultfind }}"
+      #- name: List Tomcat
+      #- yum:
+      #-   list: elinks
+      #- register: result
+      #- #changed_when: result.results | length > 0
+      #- #changed_when: "'\"yumstate\": \"installed\"' in result.results"
+      #- changed_when: "result.stdoud is not search('\"yumstate\": \"installed\"')"
+      #-      
+       #- debug:
+      #-    msg: "{{ result }}"
+      #- when: result.changed
+      #
+      #    - name: Find struts file
+      #      find:
+      #        paths: /home/applis/
+      #        patterns: '*struts*.jar'
+      #        recurse: yes
+      #        #exludes: 'home'
+      #        #files: true
+      #      register: resultfind
+      #    - debug:
+      #       msg: "{{ resultfind }}"
