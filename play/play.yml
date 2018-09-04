@@ -1,5 +1,5 @@
 ---
-- name: "Check Struts COUCOU"
+- name: "Check Struts"
   hosts: all
   become: yes
   remote_user: root
