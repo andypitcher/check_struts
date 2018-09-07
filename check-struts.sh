@@ -29,7 +29,7 @@ for libs in $(cat $1)
 
 struts_lsof() {
 
-lsof | grep struts | awk '{print $10}' | grep 'jar$' > $struts_lsof_true
+lsof | grep struts |  awk '{print $10}' | sort | uniq | grep 'jar$' > $struts_lsof_true
 
 }
 
@@ -45,6 +45,7 @@ if struts_lsof
 then
 	echo -e "Libs path and versions loaded on the system:"
 	explode_lib $struts_lsof_true
+
 elif struts_mlocate
 then
 	echo -e "Libs path and versions installed on the system:"

@@ -33,12 +33,12 @@
       register: command_result
       changed_when: "'No struts lib found' not in command_result.stdout_lines"
 
-    - debug:
-          msg: "CHECK: {{command_result}} "
+    - debug: var=command_result.stdout_lines
+          #msg: "CHECK: {{command_result.stdout_lines}} "
       when: command_result.changed
    
     - name: Remove check-struts.sh
       file:
         dest: "{{ script_path }}"
-        state: absent
+        state: present
       changed_when: false
