@@ -4,13 +4,15 @@
   become: yes
   remote_user: root
   gather_facts: no
+  serial: 
+    - 1
+    - 5
+    - 10
   
   vars:
        script_path: /tmp/check-struts.sh
+       ansible_ssh_pipelining: no
   tasks:
-      #- name: "Ping hosts"
-      #ping:
-      
     - name: ensure a list of packages installed
       yum:
         state: present
@@ -18,10 +20,10 @@
       vars:
         packages:
           - lsof
-          - dos2unix
     - name: Upload script check-struts.sh
       copy:
         src: /home/apitcher/Documents/scripts/check_struts/check-struts.sh
+        #src: /scripts/check_struts/check-struts.sh
         dest: "{{ script_path }}"
         mode: 00755
       changed_when: false
