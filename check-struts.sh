@@ -5,7 +5,6 @@
 
 struts_mlocate_true=struts_mlocate_$(hostname).txt
 struts_lsof_true=struts_lsof_$(hostname).txt
-TMP_result_true=struts_lsof_$(hostname).txt
 
 print_version(){
 #Check if $version is empty: return unknown
@@ -23,21 +22,20 @@ for libs in $(cat $1)
     do
           version=$(unzip -p $libs META-INF/MANIFEST.MF | grep 'Specification-Version\|Bundle-Version' | awk -F':' '{print $2}' | uniq)
           print_version $libs $version
-	  ((var++))
+
     done
-echo $var
 
 }
 
 struts_lsof() {
 
-lsof | grep struts | awk '{print $10}' | grep 'jar$' | uniq > $struts_lsof_true
+lsof | grep struts | awk '{print $10}' | grep 'jar$' > $struts_lsof_true
 
 }
 
 struts_mlocate(){
 
-locate struts | grep 'jar$' | uniq > $struts_mlocate_true
+locate struts | grep 'jar$' > $struts_mlocate_true
 
 }
 
@@ -53,7 +51,7 @@ then
 	explode_lib $struts_mlocate_true
 else
     echo -e "No struts lib found"
-rm -rf $TMP_result_true
+rm -rf $struts_mlocate_true $struts_lsof_true
 fi
 
 }
