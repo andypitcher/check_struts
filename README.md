@@ -2,7 +2,7 @@
 
 This project has been created following 2017 [Equifax exploit]( https://thehackernews.com/2017/09/equifax-apache-struts.html)
 
-The check_struts.sh script aim at retrieving any Apache struts libraries version and location found and/or loaded on the system.
+The **check_struts.sh** script aim at retrieving any Apache struts libraries version and location found and/or loaded on the system.
 It can be run directly on a server, or with the provided Ansible playbook.
 
 
