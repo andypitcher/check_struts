@@ -1,3 +1,0 @@
-#---
-#ansible_user: a.pitcher
-#ansible_ssh_common_args: '-oProxyCommand="ssh michdgsi-rebond.michelin.lbn.tc1.aub.linkbynet.com nc %h %p"'
